@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Employees</h2>
+  <a href="/employees/new/" class="btn btn-primary">New Employee</a>
+  </div>
+<table class="table table-striped">
+  <thead>
+    <tr><th>ID</th><th>Name</th><th>Document</th><th>Role</th><th>Prof. Type</th><th>Area</th><th>Office</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for it in items %}
+    <tr>
+      <td>{{ it.id }}</td>
+      <td>{{ it.full_name }}</td>
+      <td>{{ it.document_id }}</td>
+      <td>{{ it.role }}</td>
+      <td>{{ it.professor_type }}</td>
+      <td>{{ it.area.name }}</td>
+      <td>{{ it.office.code }}</td>
+      <td class="text-end">
+        <a class="btn btn-sm btn-outline-secondary" href="/employees/{{ it.id }}/edit/">Edit</a>
+        <a class="btn btn-sm btn-outline-danger" href="/employees/{{ it.id }}/delete/">Delete</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="8" class="text-center">No data</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+

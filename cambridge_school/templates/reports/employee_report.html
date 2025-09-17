@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}Reporte de Empleados{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3 mb-0">Reporte de Empleados</h1>
+                <div>
+                    <a href="{% url 'front:employees_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-list"></i> Ver Lista de Empleados
+                    </a>
+                </div>
+            </div>
+
+            <!-- Estadísticas Generales -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 class="card-title">{{ total_employees }}</h4>
+                                    <p class="card-text">Total Empleados</p>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-users fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 class="card-title">{{ total_professors }}</h4>
+                                    <p class="card-text">Profesores</p>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 class="card-title">{{ total_administrative }}</h4>
+                                    <p class="card-text">Administrativos</p>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-briefcase fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 class="card-title">{{ area_stats|length }}</h4>
+                                    <p class="card-text">Áreas</p>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-building fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas por Área -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-chart-bar"></i> Distribución por Área
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for area in area_stats %}
+                                <div class="col-md-4 mb-3">
+                                    <div class="border rounded p-3">
+                                        <h6 class="text-primary">{{ area.area__name }}</h6>
+                                        <div class="row text-center">
+                                            <div class="col-4">
+                                                <div class="text-success">
+                                                    <strong>{{ area.total }}</strong>
+                                                    <small class="d-block">Total</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="text-info">
+                                                    <strong>{{ area.professors }}</strong>
+                                                    <small class="d-block">Profesores</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="text-warning">
+                                                    <strong>{{ area.administrative }}</strong>
+                                                    <small class="d-block">Admin</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de Empleados -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-table"></i> Lista Detallada de Empleados
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre Completo</th>
+                                    <th>Documento</th>
+                                    <th>Rol</th>
+                                    <th>Tipo de Profesor</th>
+                                    <th>Área</th>
+                                    <th>Oficina</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for employee in employees %}
+                                <tr>
+                                    <td>{{ employee.id }}</td>
+                                    <td>
+                                        <strong>{{ employee.full_name }}</strong>
+                                    </td>
+                                    <td>
+                                        <code>{{ employee.document_id }}</code>
+                                    </td>
+                                    <td>
+                                        {% if employee.role == 'PROFESSOR' %}
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-chalkboard-teacher"></i> Profesor
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-info">
+                                                <i class="fas fa-briefcase"></i> Administrativo
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if employee.professor_type == 'PERMANENT' %}
+                                            <span class="badge bg-primary">Permanente</span>
+                                        {% elif employee.professor_type == 'CONTRACTOR' %}
+                                            <span class="badge bg-warning">Contratista</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-dark">
+                                            <i class="fas fa-building"></i> {{ employee.area.name }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-dark">
+                                            <i class="fas fa-door-open"></i> {{ employee.office.code }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">
+                                        <i class="fas fa-info-circle"></i> No hay empleados registrados
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Paginación -->
+                    {% if is_paginated %}
+                    <nav aria-label="Paginación del reporte">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1">&laquo; Primera</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                                </li>
+                            {% endif %}
+
+                            <li class="page-item active">
+                                <span class="page-link">
+                                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                                </span>
+                            </li>
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
