@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h2>Classrooms</h2>
-  <a href="/classrooms/new/" class="btn btn-primary">New Classroom</a>
+  <h2>Aulas</h2>
+  <a href="/classrooms/new/" class="btn btn-primary">Nueva Aula</a>
   </div>
 <table class="table table-striped">
   <thead>
-    <tr><th>ID</th><th>Code</th><th></th></tr>
+    <tr><th>ID</th><th>Código</th><th></th></tr>
   </thead>
   <tbody>
     {% for it in items %}
@@ -14,12 +14,12 @@
       <td>{{ it.id }}</td>
       <td>{{ it.code }}</td>
       <td class="text-end">
-        <a class="btn btn-sm btn-outline-secondary" href="/classrooms/{{ it.id }}/edit/">Edit</a>
-        <a class="btn btn-sm btn-outline-danger" href="/classrooms/{{ it.id }}/delete/">Delete</a>
+        <a class="btn btn-sm btn-outline-secondary" href="/classrooms/{{ it.id }}/edit/">Editar</a>
+        <a class="btn btn-sm btn-outline-danger" href="/classrooms/{{ it.id }}/delete/">Eliminar</a>
       </td>
     </tr>
     {% empty %}
-    <tr><td colspan="3" class="text-center">No data</td></tr>
+    <tr><td colspan="3" class="text-center">Sin datos</td></tr>
     {% endfor %}
   </tbody>
 </table>

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Office</h2>
+<h2>Oficina</h2>
 <form method="post" class="card p-3">{% csrf_token %}
   {{ form.as_p }}
   <div>
-    <button class="btn btn-primary">Save</button>
-    <a class="btn btn-secondary" href="/offices/">Cancel</a>
+    <button class="btn btn-primary">Guardar</button>
+    <a class="btn btn-secondary" href="/offices/">Cancelar</a>
   </div>
 </form>
 {% endblock %}

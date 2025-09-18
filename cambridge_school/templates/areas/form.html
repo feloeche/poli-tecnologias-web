@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Area</h2>
+<h2>Área</h2>
 <form method="post" class="card p-3">{% csrf_token %}
   {{ form.as_p }}
   <div>
-    <button class="btn btn-primary">Save</button>
-    <a class="btn btn-secondary" href="/areas/">Cancel</a>
+    <button class="btn btn-primary">Guardar</button>
+    <a class="btn btn-secondary" href="/areas/">Cancelar</a>
   </div>
 </form>
 {% endblock %}

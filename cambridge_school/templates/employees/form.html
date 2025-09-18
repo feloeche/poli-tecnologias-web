@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Employee</h2>
+<h2>Empleado</h2>
 <form method="post" class="card p-3">{% csrf_token %}
   {{ form.as_p }}
   <div class="alert alert-info">
-    For non-professors set <strong>professor_type</strong> to <em>NONE</em>.
+    Para no profesores establece <strong>professor_type</strong> como <em>NONE</em>.
   </div>
   <div>
-    <button class="btn btn-primary">Save</button>
-    <a class="btn btn-secondary" href="/employees/">Cancel</a>
+    <button class="btn btn-primary">Guardar</button>
+    <a class="btn btn-secondary" href="/employees/">Cancelar</a>
   </div>
 </form>
 {% endblock %}
